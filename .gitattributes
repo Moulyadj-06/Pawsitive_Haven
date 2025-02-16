@@ -1,0 +1,32 @@
+# Auto normalize text files
+* text=auto
+
+# Enforce LF for all files and ensure GitHub detects them in language stats
+*.js text eol=lf linguist-detectable=true   # JavaScript (React, Express)
+*.jsx text eol=lf linguist-detectable=true  # React JSX
+*.ts text eol=lf linguist-detectable=true   # TypeScript (if used)
+*.tsx text eol=lf linguist-detectable=true  # React with TypeScript
+*.json text eol=lf linguist-detectable=true # JSON (configs, package.json, etc.)
+*.css text eol=lf linguist-detectable=true  # Bootstrap & general CSS
+*.html text eol=lf linguist-detectable=true # HTML files
+*.md text eol=lf linguist-detectable=true   # Markdown (docs, README)
+*.sh text eol=lf linguist-detectable=true   # Shell scripts (if used)
+
+# Keep binary files untouched
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.mp4 binary
+*.mp3 binary
+
+# Exclude dependencies and build artifacts from GitHub language stats
+node_modules/** linguist-detectable=false  # Exclude dependencies
+dist/** linguist-detectable=false         # Exclude build outputs
+build/** linguist-detectable=false        # Exclude React build
+*.min.js linguist-detectable=false        # Ignore minified JS files
+*.map linguist-detectable=false           # Ignore source maps
