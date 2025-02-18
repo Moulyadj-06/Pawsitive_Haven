@@ -1,5 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Container, Row, Col, Button, Modal, Form } from "react-bootstrap";
+
+const dogBreeds = [
+  { name: "Golden Retriever", character: "Friendly, intelligent, devoted" },
+  { name: "Labrador Retriever", character: "Outgoing, gentle, smart" },
+  { name: "Bulldog", character: "Docile, willful, friendly" },
+  { name: "Beagle", character: "Curious, friendly, merry" },
+  { name: "Poodle", character: "Intelligent, active, alert" },
+];
 
 const ViewAdoptablePets = () => {
   const [adoptablePets, setAdoptablePets] = useState([]);
@@ -8,29 +16,19 @@ const ViewAdoptablePets = () => {
   const [showAdoptionForm, setShowAdoptionForm] = useState(false);
   const [adoptionDetails, setAdoptionDetails] = useState({ name: "", email: "", phone: "", address: "" });
   const [adoptionSuccess, setAdoptionSuccess] = useState(false);
-
-  const dogBreeds = useMemo(() => [
-    { name: "Golden Retriever", character: "Friendly, intelligent, devoted" },
-    { name: "Labrador Retriever", character: "Outgoing, gentle, smart" },
-    { name: "Bulldog", character: "Docile, willful, friendly" },
-    { name: "Beagle", character: "Curious, friendly, merry" },
-    { name: "Poodle", character: "Intelligent, active, alert" },
-  ], []);
+  const [phoneError, setPhoneError] = useState("");
 
   useEffect(() => {
-    const fetchPets = () => {
-      const pets = dogBreeds.map((breed, index) => ({
-        id: index + 1,
-        name: breed.name,
-        image: `/images/dog_${(index % 5) + 1}.jpg`,
-        description: `This adorable ${breed.name} is looking for a home!`,
-        character: breed.character
-      }));
-      setAdoptablePets(pets);
-    };
-
-    fetchPets();
-  }, [dogBreeds]);
+    const pets = dogBreeds.map((breed, index) => ({
+      id: index + 1,
+      name: breed.name,
+      image: `/images/renamed_pets/pets/${breed.name.replace(/\s+/g, '')}.jpeg`, // Replacing spaces with underscores
+      description: `This adorable ${breed.name} is looking for a home!`,
+      character: breed.character,
+    }));
+    setAdoptablePets(pets);
+  }, []);
+  
 
   const handleViewMore = (pet) => {
     setSelectedPet(pet);
@@ -38,10 +36,24 @@ const ViewAdoptablePets = () => {
     setShowAdoptionForm(false);
     setAdoptionSuccess(false);
     setAdoptionDetails({ name: "", email: "", phone: "", address: "" });
+    setPhoneError("");
+  };
+
+  const handlePhoneChange = (e) => {
+    const numericValue = e.target.value.replace(/[^0-9]/g, "");
+    if (numericValue.length > 10) return;
+    setAdoptionDetails({ ...adoptionDetails, phone: numericValue });
+    setPhoneError(numericValue.length === 10 ? "" : "Phone number must be 10 digits");
   };
 
   const handleAdoptionFormSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!adoptionDetails.name || !adoptionDetails.email || adoptionDetails.phone.length !== 10 || !adoptionDetails.address) {
+      alert("Please fill in all fields correctly.");
+      return;
+    }
+
     const adoptionData = { ...adoptionDetails, petName: selectedPet?.name };
 
     try {
@@ -89,7 +101,12 @@ const ViewAdoptablePets = () => {
             <Modal.Title>{selectedPet.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="text-center">
-            <img src={selectedPet.image} alt={selectedPet.name} className="img-fluid rounded mb-3" style={{ maxHeight: "200px" }} />
+            <img
+              src={selectedPet.image}
+              alt={selectedPet.name}
+              className="img-fluid rounded mb-3"
+              style={{ maxHeight: "200px" }}
+            />
             <p><strong>Description:</strong> {selectedPet.description}</p>
             <p><strong>Character:</strong> {selectedPet.character}</p>
 
@@ -99,21 +116,48 @@ const ViewAdoptablePets = () => {
               <Form onSubmit={handleAdoptionFormSubmit}>
                 <Form.Group controlId="name">
                   <Form.Label>Your Name</Form.Label>
-                  <Form.Control type="text" value={adoptionDetails.name} onChange={(e) => setAdoptionDetails({ ...adoptionDetails, name: e.target.value })} required />
+                  <Form.Control
+                    type="text"
+                    value={adoptionDetails.name}
+                    onChange={(e) => setAdoptionDetails({ ...adoptionDetails, name: e.target.value })}
+                    required
+                  />
                 </Form.Group>
+
                 <Form.Group controlId="email">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" value={adoptionDetails.email} onChange={(e) => setAdoptionDetails({ ...adoptionDetails, email: e.target.value })} required />
+                  <Form.Control
+                    type="email"
+                    value={adoptionDetails.email}
+                    onChange={(e) => setAdoptionDetails({ ...adoptionDetails, email: e.target.value })}
+                    required
+                  />
                 </Form.Group>
+
                 <Form.Group controlId="phone">
                   <Form.Label>Phone</Form.Label>
-                  <Form.Control type="text" value={adoptionDetails.phone} onChange={(e) => setAdoptionDetails({ ...adoptionDetails, phone: e.target.value })} required />
+                  <Form.Control
+                    type="text"
+                    value={adoptionDetails.phone}
+                    onChange={handlePhoneChange}
+                    required
+                  />
+                  {phoneError && <Form.Text className="text-danger">{phoneError}</Form.Text>}
                 </Form.Group>
+
                 <Form.Group controlId="address">
                   <Form.Label>Address</Form.Label>
-                  <Form.Control type="text" value={adoptionDetails.address} onChange={(e) => setAdoptionDetails({ ...adoptionDetails, address: e.target.value })} required />
+                  <Form.Control
+                    type="text"
+                    value={adoptionDetails.address}
+                    onChange={(e) => setAdoptionDetails({ ...adoptionDetails, address: e.target.value })}
+                    required
+                  />
                 </Form.Group>
-                <Button variant="success" type="submit" className="mt-3">Submit Adoption Request</Button>
+
+                <Button variant="success" type="submit" className="mt-3">
+                  Submit Adoption Request
+                </Button>
               </Form>
             ) : (
               <Button variant="success" onClick={() => setShowAdoptionForm(true)}>Adopt {selectedPet.name} 🐾</Button>

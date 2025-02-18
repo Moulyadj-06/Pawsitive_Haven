@@ -14,11 +14,8 @@ const AdoptPet = ({ selectedPet }) => {
     const { name, value } = e.target;
 
     if (name === "phone") {
-      // Allow only numbers and restrict length to 10 digits
-      const numericValue = value.replace(/\D/g, ""); // Remove non-numeric characters
-      if (numericValue.length > 10) return; // Prevent input longer than 10 digits
-
-      setAdoptionDetails({ ...adoptionDetails, phone: numericValue });
+      const numericValue = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+      setAdoptionDetails({ ...adoptionDetails, phone: numericValue.slice(0, 10) }); // Restrict to 10 digits
     } else {
       setAdoptionDetails({ ...adoptionDetails, [name]: value });
     }
