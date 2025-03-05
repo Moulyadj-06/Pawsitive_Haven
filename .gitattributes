@@ -2,15 +2,33 @@
 * text=auto
 
 # Enforce LF for all files and ensure GitHub detects them in language stats
-*.js text eol=lf linguist-detectable=true   # JavaScript (React, Express)
-*.jsx text eol=lf linguist-detectable=true  # React JSX
-*.ts text eol=lf linguist-detectable=true   # TypeScript (if used)
-*.tsx text eol=lf linguist-detectable=true  # React with TypeScript
-*.json text eol=lf linguist-detectable=true # JSON (configs, package.json, etc.)
-*.css text eol=lf linguist-detectable=true  # Bootstrap & general CSS
-*.html text eol=lf linguist-detectable=true # HTML files
-*.md text eol=lf linguist-detectable=true   # Markdown (docs, README)
-*.sh text eol=lf linguist-detectable=true   # Shell scripts (if used)
+
+# JavaScript (React, Express)
+*.js text eol=lf linguist-detectable=true  
+
+# React JSX
+*.jsx text eol=lf linguist-detectable=true  
+
+# TypeScript (if used)
+*.ts text eol=lf linguist-detectable=true   
+
+# React with TypeScript
+*.tsx text eol=lf linguist-detectable=true  
+
+# JSON (configs, package.json, etc.)
+*.json text eol=lf linguist-detectable=true  
+
+# CSS (Bootstrap & general styles)
+*.css text eol=lf linguist-detectable=true  
+
+# HTML files
+*.html text eol=lf linguist-detectable=true  
+
+# Markdown (docs, README)
+*.md text eol=lf linguist-detectable=true   
+
+# Shell scripts (if used)
+*.sh text eol=lf linguist-detectable=true   
 
 # Keep binary files untouched
 *.png binary
@@ -25,8 +43,8 @@
 *.mp3 binary
 
 # Exclude dependencies and build artifacts from GitHub language stats
-node_modules/** linguist-detectable=false  # Exclude dependencies
-dist/** linguist-detectable=false         # Exclude build outputs
-build/** linguist-detectable=false        # Exclude React build
-*.min.js linguist-detectable=false        # Ignore minified JS files
-*.map linguist-detectable=false           # Ignore source maps
+node_modules/** linguist-detectable=false  
+dist/** linguist-detectable=false         
+build/** linguist-detectable=false        
+*.min.js linguist-detectable=false        
+*.map linguist-detectable=false           

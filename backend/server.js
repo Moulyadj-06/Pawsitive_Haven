@@ -1,39 +1,47 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-const Adoption = require("./models/AdoptionRequest");
 
 const app = express();
-app.use(cors());
-app.use(express.json()); // Corrected this line
+const PORT = process.env.PORT || 3001;
 
-app.post("/api/adopt", async (req, res) => {
-    try {
-        console.log("Received request body:", req.body); // Log request
+// ✅ Middleware
+app.use(express.json());
+app.use(cors({ origin: "http://localhost:3000" }));
 
-        const { name, email, phone, address, petName } = req.body;
+// ✅ MongoDB Connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-        if (!name || !email || !phone || !address || !petName) {
-            console.error("Validation Failed: Missing fields", req.body);
-            return res.status(400).json({ message: "All fields are required" });
-        }
-
-        const newAdoption = new Adoption({ name, email, phone, address, petName });
-        const savedAdoption = await newAdoption.save();
-
-        console.log("Adoption saved:", savedAdoption);
-        res.status(201).json({ message: "Adoption request submitted successfully", data: savedAdoption });
-    } catch (error) {
-        console.error("Error in adoption request:", error);
-        res.status(500).json({ message: "Internal Server Error", error: error.message });
-    }
+// ✅ Define Dog Breed Schema
+const dogBreedSchema = new mongoose.Schema({
+  Breed: String,
+  "Country of Origin": String,
+  "Fur Color": String,
+  "Height (in)": String,
+  "Color of Eyes": String,
+  "Longevity (yrs)": String,
+  "Character Traits": String,
+  "Common Health Problems": String,
 });
 
-mongoose.connect("mongodb://localhost:27017/petAdoption", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log("MongoDB Connected");
-    app.listen(5000, () => console.log("Server running on port 5000"));
-}).catch(err => console.log(err));
+const DogBreed = mongoose.model("DogBreed", dogBreedSchema);
+
+// ✅ API Route to Fetch Dog Breeds
+app.get("/api/dogBreeds", async (req, res) => {
+  try {
+    const dogBreeds = await DogBreed.find();
+    console.log("🟢 Fetching Dog Breeds:", dogBreeds.length);
+    res.json(dogBreeds);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// ✅ Start Server
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
