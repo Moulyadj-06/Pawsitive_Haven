@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const CatAdoptable = () => {
   const [cats, setCats] = useState([]);
@@ -13,7 +14,9 @@ const CatAdoptable = () => {
     address: "",
   });
 
-  // ✅ Fetch Cats Data from Backend
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Fetch Cat Data
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/cats")
@@ -21,7 +24,6 @@ const CatAdoptable = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  // ✅ Handle Form Input Changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -29,12 +31,11 @@ const CatAdoptable = () => {
     });
   };
 
-  // ✅ Open Modal When "Adopt This Cat" is Clicked
   const handleAdopt = (cat) => {
     setSelectedCat(cat);
     setShowModal(true);
 
-    // ✅ Clear the form every time new cat is adopted
+    // Clear form on selecting new cat
     setFormData({
       name: "",
       email: "",
@@ -43,99 +44,102 @@ const CatAdoptable = () => {
     });
   };
 
-  // ✅ Strong Email Validation Function
-  const isValidEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  };
+  const isValidPhoneNumber = (phone) => /^\d{10}$/.test(phone);
+  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  // ✅ Strong Phone Number Validation Function
-  const isValidPhoneNumber = (phone) => {
-    const phoneRegex = /^[0-9]{10}$/; // Exactly 10 digits
-    return phoneRegex.test(phone);
-  };
-
-  // ✅ Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Basic Validation Before Submission
     if (!formData.name || !formData.email || !formData.phone || !formData.address) {
       alert("⚠️ All fields are required!");
       return;
     }
 
-    // ✅ Phone Number Validation
     if (!isValidPhoneNumber(formData.phone)) {
-      alert("⚠️ Phone number must be exactly 10 digits (no alphabets)!");
+      alert("⚠️ Phone number must be exactly 10 digits!");
       return;
     }
 
-    // ✅ Email Validation
     if (!isValidEmail(formData.email)) {
-      alert("⚠️ Please enter a valid email address (with @ and .com)!");
+      alert("⚠️ Please enter a valid email address!");
       return;
     }
 
-    // ✅ Preparing Adoption Data to Send to MongoDB
     const adoptionData = {
-      ...formData,
-      catName: selectedCat.name,
-      catBreed: selectedCat.Breed,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      address: formData.address,
+      petName: selectedCat.name,
+      petType: "Cat", // Keeping this as Cat
+      breed: selectedCat.Breed,
       origin: selectedCat.origin,
-      min_life_expectancy: selectedCat.min_life_expectancy,
-      max_life_expectancy: selectedCat.max_life_expectancy,
-      min_weight: selectedCat.min_weight,
-      max_weight: selectedCat.max_weight,
-      family_friendly: selectedCat.family_friendly,
-      grooming: selectedCat.grooming,
-      intelligence: selectedCat.intelligence,
-      adoptionFee: Math.floor(Math.random() * 5000) + 1000, // Random Adoption Fee
+      adoptionFee: Math.floor(Math.random() * 5000) + 1000,
     };
 
-    // ✅ Send Data to MongoDB
-    axios
-      .post("http://localhost:3001/api/adoptCat", adoptionData)
-      .then(() => {
-        alert(`🎉 Adoption Request for ${selectedCat.name} Submitted Successfully!`);
-        setShowModal(false);
+    try {
+      // No need to store response as it's not used
+      await axios.post("http://localhost:3001/api/adoptPet", adoptionData);
+      alert(`🎉 Adoption Request for ${selectedCat.name} submitted successfully!`);
+      setShowModal(false);
+    } catch (err) {
+      console.error("❌ Error submitting adoption request:", err.response || err.message);
+      alert("❌ Something went wrong. Please try again.");
+    }
+  };
 
-        // ✅ Clear Form Data
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          address: "",
-        });
-      })
-      .catch((err) => console.error(err));
+  const handleBackClick = () => {
+    navigate("/search-pet"); // Navigate to the SearchAPet page when back button is clicked
   };
 
   return (
-    <Container>
-      <h2 className="text-center my-4">🐱 Adoptable Cats</h2>
+    <Container className="mt-4">
+      <h2 className="text-center mb-4">🐱 Adoptable Cats</h2>
 
-      {/* ✅ Display Cats */}
+      {/* Back Button with Enhanced UI */}
+      <Button
+        variant="primary"
+        onClick={handleBackClick}
+        className="mb-4 d-flex align-items-center justify-content-center"
+        style={{
+          padding: "10px 20px",
+          borderRadius: "30px",
+          backgroundColor: "#007bff",
+          color: "white",
+          fontSize: "16px",
+          transition: "background-color 0.3s ease, transform 0.2s ease",
+          border: "none",
+        }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = "#0056b3"; // Darker blue on hover
+          e.target.style.transform = "scale(1.05)";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = "#007bff"; // Original blue
+          e.target.style.transform = "scale(1)";
+        }}
+      >
+        <i className="bi bi-arrow-left-circle" style={{ marginRight: "8px", fontSize: "18px" }}></i>
+        🔙 Back to Search Pets
+      </Button>
+
       <Row>
-        {cats.map((cat) => (
-          <Col key={cat._id} sm={12} md={4} lg={3} className="mb-4">
+        {cats.map((cat, idx) => (
+          <Col md={4} lg={3} sm={6} xs={12} key={idx} className="mb-4">
             <Card>
               <Card.Body>
-                <Card.Title><strong>Name:</strong> {cat.name}</Card.Title>
+                <Card.Title>{cat.name}</Card.Title>
                 <Card.Text>
                   <strong>Breed:</strong> {cat.Breed} <br />
                   <strong>Origin:</strong> {cat.origin} <br />
-                  <strong>Life Span:</strong> {cat.min_life_expectancy} - {cat.max_life_expectancy} yrs <br />
+                  <strong>Life Span:</strong> {cat.min_life_expectancy} - {cat.max_life_expectancy} years <br />
                   <strong>Weight:</strong> {cat.min_weight} - {cat.max_weight} kg <br />
                   <strong>Family Friendly:</strong> {cat.family_friendly}/5 <br />
                   <strong>Grooming:</strong> {cat.grooming}/5 <br />
                   <strong>Intelligence:</strong> {cat.intelligence}/5 <br />
                 </Card.Text>
-                <Button
-                  variant="success"
-                  onClick={() => handleAdopt(cat)}
-                >
-                  🐱 Adopt {cat.name}
+                <Button variant="success" onClick={() => handleAdopt(cat)}>
+                  🐱 Adopt This Cat
                 </Button>
               </Card.Body>
             </Card>
@@ -143,65 +147,63 @@ const CatAdoptable = () => {
         ))}
       </Row>
 
-      {/* ✅ Modal Form */}
-      {selectedCat && (
-        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>🐱 Adopt {selectedCat.name}</Modal.Title>
-          </Modal.Header>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>🐱 Adopt {selectedCat?.name}</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={handleSubmit}>
           <Modal.Body>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group>
-                <Form.Label>Your Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-
-              <Button type="submit" variant="success">
-                ✅ Submit Adoption Request
-              </Button>
-            </Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Your Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter full name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="tel"
+                placeholder="Enter 10-digit phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </Form.Group>
           </Modal.Body>
-        </Modal>
-      )}
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="success" type="submit">
+              Submit Request
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </Container>
   );
 };

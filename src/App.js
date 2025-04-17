@@ -4,10 +4,15 @@ import NavigationBar from "./Components/NavigationBar";
 import Dashboard from "./Components/Dashboard";
 import AdoptPet from "./Components/AdoptPet";
 import ViewAdoptablePets from "./Components/ViewAdoptablePets";
+import CatAdoptable from "./Components/CatAdoptable"; // ✅ Import the CatAdoptable component
 import PowerBIReport from "./Components/PowerBiReport";
 import SearchAPet from "./Components/SearchAPet";
 import AdminLogin from "./Components/AdminLogin";
 import AdminDashboard from "./Components/AdminDashboard";
+import PetRecommendations from "./Components/PetRecommendations";
+
+
+
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -28,8 +33,10 @@ function App() {
         />
 
         <Route path="/search-pet" element={<SearchAPet />} />
+        <Route path="/pet_recommendations" element={<PetRecommendations />} />
         <Route path="/adopt-pet" element={<AdoptPet />} />
         <Route path="/view-adoptable-pets" element={<ViewAdoptablePets />} />
+        <Route path="/view-cat-adoptable-pets" element={<CatAdoptable />} />  {/* ✅ New route added */}
         <Route path="/powerbi" element={<PowerBIReport />} />
       </Routes>
     </Router>

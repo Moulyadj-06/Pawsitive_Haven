@@ -50,36 +50,6 @@ const NavigationBar = () => {
 
             <Nav.Link
               as={Link}
-              to="/adopt-pet"
-              style={{
-                color: location.pathname === "/adopt-pet" ? "#fff" : "#f1f1f1",
-                fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/adopt-pet" ? "2px solid white" : "none",
-                transition: "0.3s",
-              }}
-            >
-              Adopt a Pet
-            </Nav.Link>
-
-            <Nav.Link
-              as={Link}
-              to="/view-adoptable-pets"
-              style={{
-                color: location.pathname === "/view-adoptable-pets" ? "#fff" : "#f1f1f1",
-                fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/view-adoptable-pets" ? "2px solid white" : "none",
-                transition: "0.3s",
-              }}
-            >
-              View Pets
-            </Nav.Link>
-
-            <Nav.Link
-              as={Link}
               to="/powerbi"
               style={{
                 color: location.pathname === "/powerbi" ? "#fff" : "#f1f1f1",
@@ -108,7 +78,23 @@ const NavigationBar = () => {
               Search a Pet
             </Nav.Link>
 
-            {/* Admin Login Link */}
+            <Nav.Link
+              as={Link}
+              to="/pet_recommendations"
+              style={{
+                color: location.pathname === "/pet_recommendations" ? "#fff" : "#f1f1f1",
+                fontSize: "1.1rem",
+                fontWeight: "500",
+                padding: "8px 15px",
+                borderBottom: location.pathname === "/pet_recommendations" ? "2px solid white" : "none",
+                transition: "0.3s",
+              }}
+            >
+              Pet Recommendations
+            </Nav.Link>
+
+            
+
             <Nav.Link
               as={Link}
               to="/admin-login"

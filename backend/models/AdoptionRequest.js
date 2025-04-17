@@ -1,12 +1,19 @@
+// models/AdoptionRequest.js
+
 const mongoose = require("mongoose");
 
-const adoptionSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    phone: { type: String, required: true },
-    address: { type: String, required: true },
-    petName: { type: String, required: true }
-}, { timestamps: true });
+const adoptionRequestSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String,
+  address: String,
+  petName: String,
+  petType: String,
+  breed: String,
+  origin: String,
+  adoptionFee: Number,
+  status: { type: String, default: "Pending" }, // Add this if using status in AdminDashboard
+  adoptedAt: { type: Date, default: Date.now },
+});
 
-const Adoption = mongoose.model("Adoption", adoptionSchema);
-module.exports = Adoption;
+module.exports = mongoose.model("AdoptionRequest", adoptionRequestSchema);
