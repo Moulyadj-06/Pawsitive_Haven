@@ -13,6 +13,7 @@ function AdminDashboard() {
   const [selectedRequests, setSelectedRequests] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [bulkStatus, setBulkStatus] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const requestsPerPage = 10;
   const navigate = useNavigate(); // <-- Navigation hook
@@ -71,6 +72,9 @@ function AdminDashboard() {
         setSelectedRequests([]);
         setSelectAll(false);
         setBulkStatus("");
+        setShowSuccess(true);
+
+        setTimeout(() => setShowSuccess(false), 3000); // Hide success message after 3s
       }
     } catch (err) {
       setError("Failed to perform bulk update.");
@@ -108,6 +112,8 @@ function AdminDashboard() {
   };
 
   return (
+    <div style={{ backgroundColor: "	#BDAE58", height: "1000vh", padding: "50px" }}>
+    
     <Container className="my-5">
       {/* Back Button */}
       <Button
@@ -119,6 +125,13 @@ function AdminDashboard() {
       </Button>
 
       <h2 className="mb-4 text-center">Adoption Requests</h2>
+
+       {/* ✅ Success Alert */}
+       {showSuccess && (
+        <Alert variant="success" onClose={() => setShowSuccess(false)} dismissible>
+          Status updated successfully!
+        </Alert>
+      )}
 
       {loading && <Spinner animation="border" variant="primary" />}
       {error && <Alert variant="danger">{error}</Alert>}
@@ -172,9 +185,14 @@ function AdminDashboard() {
           <option value="Accepted">Accept</option>
           <option value="Rejected">Reject</option>
         </Form.Select>
-        <Button variant="primary" onClick={handleBulkUpdate}>
+        <Button 
+        variant="primary"
+        onClick={handleBulkUpdate}
+        disabled={!bulkStatus || selectedRequests.length === 0}
+        >
           Update Selected
         </Button>
+        
       </div>
 
       {/* Cards */}
@@ -252,6 +270,7 @@ function AdminDashboard() {
         </Button>
       </div>
     </Container>
+    </div>
   );
 }
 

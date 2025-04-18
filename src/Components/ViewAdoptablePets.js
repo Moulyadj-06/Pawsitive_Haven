@@ -74,7 +74,13 @@ function ViewAdoptablePets() {
     try {
       await axios.post("http://localhost:3001/api/adoptPet", adoptionData);
       alert(`🎉 Adoption Request for ${selectedDog.Breed} submitted successfully!`);
-      handleCloseModal();
+      // Redirect after successful adoption based on pet type
+      if (adoptionData.petType === "Dog") {
+        navigate("/dog-recommendations");
+      } else {
+        navigate("/cat-recommendations");
+      }
+      handleCloseModal();  // Close the modal after submission
     } catch (err) {
       console.error("❌ Error submitting adoption request:", err);
       alert("❌ Something went wrong. Please try again.");
@@ -122,6 +128,15 @@ function ViewAdoptablePets() {
             <Col key={index} md={4} className="mb-4">
               <Card className="shadow-lg">
                 <Card.Body>
+                   {/* Dog Image */}
+    <div className="text-center mb-3">
+      <img 
+        src={`/images/renamed_pets/pets/${dog.Breed.replace(/\s/g, "")}.jpeg`}
+        alt={dog.Breed}
+        style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+        onError={(e) => { e.target.src = "/images/default.jpg"; }} // fallback image
+      />
+    </div>
                   <Card.Title><strong>Breed:</strong> {dog.Breed}</Card.Title>
                   <Card.Text>
                     <strong>Country:</strong> {dog["Country of Origin"]} <br />

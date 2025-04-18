@@ -81,11 +81,17 @@ const CatAdoptable = () => {
       // No need to store response as it's not used
       await axios.post("http://localhost:3001/api/adoptPet", adoptionData);
       alert(`🎉 Adoption Request for ${selectedCat.name} submitted successfully!`);
-      setShowModal(false);
-    } catch (err) {
-      console.error("❌ Error submitting adoption request:", err.response || err.message);
-      alert("❌ Something went wrong. Please try again.");
+     // Redirect after successful adoption based on pet type
+    if (adoptionData.petType === "Dog") {
+      navigate("/dog-recommendations");
+    } else {
+      navigate("/cat-recommendations");
     }
+    setShowModal(false); // Close the modal after submission
+  } catch (err) {
+    console.error("❌ Error submitting adoption request:", err.response || err.message);
+    alert("❌ Something went wrong. Please try again.");
+  }
   };
 
   const handleBackClick = () => {

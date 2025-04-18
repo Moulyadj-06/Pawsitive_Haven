@@ -80,20 +80,18 @@ const NavigationBar = () => {
 
             <Nav.Link
               as={Link}
-              to="/pet_recommendations"
+              to="/about-us"
               style={{
-                color: location.pathname === "/pet_recommendations" ? "#fff" : "#f1f1f1",
+                color: location.pathname === "/about-us" ? "#fff" : "#f1f1f1",
                 fontSize: "1.1rem",
                 fontWeight: "500",
                 padding: "8px 15px",
-                borderBottom: location.pathname === "/pet_recommendations" ? "2px solid white" : "none",
+                borderBottom: location.pathname === "/about-us" ? "2px solid white" : "none",
                 transition: "0.3s",
               }}
             >
-              Pet Recommendations
+              About Us
             </Nav.Link>
-
-            
 
             <Nav.Link
               as={Link}

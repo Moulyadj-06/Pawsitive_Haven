@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const AdoptionRequest = require("../models/AdoptionRequest");
-const transporter = require("../utils/sendEmail");
+const sendEmail = require("../utils/sendEmail");
 
 // PUT /api/adoptPetRequests/bulk-update
 router.put("/bulk-update", async (req, res) => {
@@ -14,39 +14,37 @@ router.put("/bulk-update", async (req, res) => {
   }
 
   try {
+    // Find the adoption requests that match the provided ids
     const requestsToUpdate = await AdoptionRequest.find({ _id: { $in: ids } });
 
+    // Update the status of the adoption requests
     await AdoptionRequest.updateMany(
       { _id: { $in: ids } },
       { $set: { status: status } }
     );
 
-    // Send emails
+    // Send email to each adopter
     requestsToUpdate.forEach((request) => {
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: request.email,
-        subject: `Adoption Request ${status}`,
-        html: `
-          <p>Dear ${request.name},</p>
-          <p>Your adoption request for <strong>${request.petName}</strong> (${request.petType}) has been <strong>${status}</strong>.</p>
-          ${
-            status === "Accepted"
-              ? "<p>We will reach out to you shortly for the next steps!</p>"
-              : "<p>Thank you for your interest. We hope to assist you again in the future.</p>"
-          }
-          <br/>
-          <p>Warm regards,<br/>Pet Adoption Team</p>
-        `,
-      };
+      const subject = `Adoption Request ${status}`;
+      const text = `
+        Hi ${request.name},
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error("Email sending error for:", request.email, error);
-        } else {
-          console.log("Email sent to:", request.email);
-        }
-      });
+        Your request to adopt ${request.petName} has been ${status}!
+
+        ${status === "Accepted"
+          ? "We will contact you soon to discuss the next steps."
+          : "We are sorry, but your adoption request was not accepted. Please feel free to explore other pets available for adoption."}
+
+        Thank you for your interest in adopting!
+
+        Best regards,
+        The Pet Adoption Team
+      `;
+
+      // Use the sendEmail function to send the email to the adopter
+      sendEmail(request.email, subject, text)
+        .then(() => console.log(`Email sent to ${request.name}`))
+        .catch((error) => console.error(`Error sending email to ${request.name}:`, error));
     });
 
     res.status(200).json({ message: "Bulk status updated and emails sent." });
