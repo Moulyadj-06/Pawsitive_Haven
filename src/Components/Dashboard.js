@@ -55,41 +55,33 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Adoption Summary */}
-        <div className="col-md-12 mb-4">
+        
+
+        {/* ML Model Overview */}
+        <div className="col-md-12 mt-4">
           <div className="p-4 bg-white border rounded shadow-sm">
-            <h5 className="text-warning fw-bold">📈 Adoption Summary</h5>
-            <div className="row text-center">
-              <div className="col-md-3">
-                <div className="bg-light p-3 rounded shadow-sm">
-                  <h6 className="text-secondary">Total Requests</h6>
-                  <p className="fs-4 fw-bold text-dark">152</p>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="bg-light p-3 rounded shadow-sm">
-                  <h6 className="text-success">Approved</h6>
-                  <p className="fs-4 fw-bold text-success">89</p>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="bg-light p-3 rounded shadow-sm">
-                  <h6 className="text-danger">Pending</h6>
-                  <p className="fs-4 fw-bold text-danger">42</p>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="bg-light p-3 rounded shadow-sm">
-                  <h6 className="text-primary">Top Pet Type</h6>
-                  <p className="fs-4 fw-bold text-primary">Dogs 🐶</p>
-                </div>
-              </div>
-            </div>
-            <p className="text-muted mt-3 fst-italic">
-              Stay on top of approvals to keep the adoption process smooth and timely! 🕒
+            <h5 className="text-primary fw-bold">🧠 Pet Adoption Prediction Model – Overview</h5>
+            <p>
+              This dashboard integrates a <strong>Machine Learning model</strong> to help predict whether a pet is likely to be adopted. 
+              This tool assists shelters and admins in identifying pets that have a higher chance of finding a home, 
+              so that special care or promotion can be given to those with lower adoption probabilities.
             </p>
+            <ul>
+              <li><strong>Features used:</strong> Animal type, gender, breed, and vaccination status</li>
+              <li><strong>Prediction output:</strong> 
+                <span className="text-success"> "Adoptable" </span> or 
+                <span className="text-danger"> "Not Adoptable"</span>
+              </li>
+              <li><strong>Accuracy:</strong> <span className="text-primary fw-bold">93.54%</span> overall</li>
+              <li><strong>Adoptable Pets:</strong> 96% precision & recall — great at identifying pets likely to be adopted 🐕</li>
+              <li><strong>Not Adoptable Pets:</strong> 71% precision & recall — useful but can be improved 🐾</li>
+            </ul>
+            <div className="alert alert-info mt-3 mb-0" role="alert">
+              📊 This predictive system helps streamline decisions, boost adoption rates, and ensure no pet is left behind!
+            </div>
           </div>
         </div>
+
 
         {/* Quick Tips */}
         <div className="col-md-12 mt-2">

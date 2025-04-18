@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";  // Only this one
+import axios from "axios";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import NavigationBar from "./Components/NavigationBar";
 import Dashboard from "./Components/Dashboard";
@@ -15,9 +16,15 @@ import CatRecommendation from "./Components/CatRecommendation";
 import AboutUs from "./Components/AboutUs";
 
 
-
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [pets, setPets] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/pets")
+      .then((response) => setPets(response.data))
+      .catch((error) => console.error("Error fetching pets:", error));
+  }, []);
   
   return (
     <Router>
@@ -34,7 +41,7 @@ function App() {
         <Route path="/adopt-pet" element={<AdoptPet />} />
         <Route path="/view-adoptable-pets" element={<ViewAdoptablePets />} />
         <Route path="/view-cat-adoptable-pets" element={<CatAdoptable />} />  {/* ✅ New route added */}
-        <Route path="/powerbi" element={<PowerBIReport />} />
+        <Route path="/powerbi" element={<PowerBIReport pets={pets} />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/about-us" element={<AboutUs />} />
 

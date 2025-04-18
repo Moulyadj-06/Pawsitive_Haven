@@ -152,11 +152,11 @@ app.post("/api/adoptPet", async (req, res) => {
 });
 
 /* ---------------------------------------------------
-✅ API: Adoption Trends (Optimized)
+✅ ADOPTION TRENDS API
 --------------------------------------------------- */
 app.get("/api/adoption-trends", async (req, res) => {
   try {
-    const trends = await PetAdoption.aggregate([
+    const trends = await AdoptionRequest.aggregate([
       {
         $group: {
           _id: { $dateToString: { format: "%Y-%m-%d", date: "$adoptedAt" } },
@@ -172,6 +172,15 @@ app.get("/api/adoption-trends", async (req, res) => {
     res.status(500).json({ message: "Error fetching adoption trends", error });
   }
 });
+
+/* ---------------------------------------------------
+✅ GLOBAL ERROR HANDLER
+--------------------------------------------------- */
+app.use((err, req, res, next) => {
+  console.error("🚨 Global Error:", err);
+  res.status(500).json({ message: "Internal Server Error", error: err.message });
+});
+
 
 /* ---------------------------------------------------
 ✅ ERROR HANDLING MIDDLEWARE (Global)
@@ -222,6 +231,28 @@ app.put("/api/adoptPetRequests/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update status" });
   }
 });
+
+
+// ✅ API: Adoption Trends
+app.get("/api/adoption-trends", async (req, res) => {
+  try {
+    const trends = await PetAdoption.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$adoptedAt" } },
+          adoptions: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    res.json(trends.map((t) => ({ date: t._id, adoptions: t.adoptions })));
+  } catch (error) {
+    console.error("❌ Error fetching trends:", error);
+    res.status(500).json({ message: "Error fetching trends", error });
+  }
+});
+
+
 
 /* ---------------------------------------------------
 ✅ Start Server

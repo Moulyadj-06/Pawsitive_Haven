@@ -47,7 +47,7 @@ function ViewAdoptablePets() {
     if (!formData.name || !formData.email || !formData.phone || !formData.address) {
       alert("⚠️ All fields are required!");
       return;
-    }
+    } 
 
     if (!isValidPhoneNumber(formData.phone)) {
       alert("⚠️ Phone number must be exactly 10 digits!");
