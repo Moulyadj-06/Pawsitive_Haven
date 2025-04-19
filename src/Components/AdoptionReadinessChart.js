@@ -18,7 +18,7 @@ const AdoptionReadinessChart = ({ pets }) => {
 
   return (
     <div style={{ width: "100%", height: 400 }}>
-      <h3 style={{ textAlign: "center" }}>🐾 Adoption Readiness Overview</h3>
+      <h3 style={{ textAlign: "center" }}>🐾 Adoption Readiness Overview🐾</h3>
       <ResponsiveContainer>
         <PieChart>
           <Pie

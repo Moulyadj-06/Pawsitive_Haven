@@ -50,7 +50,7 @@ const PowerBIReport = () => {
         gridTemplateColumns: "repeat(2, 1fr)",
         gap: "40px",
         padding: "40px",
-        background: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fbc2eb 100%)",  // Bold and vibrant gradient
+        background: "linear-gradient(135deg, #ff7e5f 0%, #feb47b 50%, #ff6a88 100%)",  // Bold and vibrant gradient
         minHeight: "100vh",
       }}
     >

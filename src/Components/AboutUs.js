@@ -3,10 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AboutUs = () => {
   return (
-    <div>
+    <div style={{ fontFamily: "'Times New Roman', Times, serif" }}>
       <div
         style={{
-          background: 'linear-gradient(135deg, #ff6b81, #f8b500)',
+          background: 'linear-gradient(135deg,rgb(105, 44, 247),rgb(54, 200, 233))',
           padding: '50px 0',
           color: '#fff',
           minHeight: '100vh',
@@ -15,9 +15,9 @@ const AboutUs = () => {
         <div className="container">
           <div className="row text-center">
             <div className="col">
-              <h1 className="display-3 mb-4">About Us</h1>
-              <p className="lead">
-                Welcome to Pawsitive Heaven! We are dedicated to finding loving homes for
+              <h1 className="display-3 mb-4 fw-bold">About Us</h1>
+              <p className="lead fw-semibold">
+                Welcome to <strong>Pawsitive Heaven</strong>! We are dedicated to finding loving homes for
                 pets in need and helping you find your perfect companion.
               </p>
             </div>
@@ -27,8 +27,8 @@ const AboutUs = () => {
             <div className="col-md-6">
               <div className="card bg-dark text-white mb-4">
                 <div className="card-body">
-                  <h5 className="card-title">Our Mission</h5>
-                  <p className="card-text">
+                  <h5 className="card-title fw-bold">Our Mission</h5>
+                  <p className="card-text fw-medium">
                     Our mission is to provide a seamless platform for people to adopt
                     pets while promoting responsible pet ownership. We aim to reduce the
                     number of homeless animals and ensure every pet finds a loving family.
@@ -40,8 +40,8 @@ const AboutUs = () => {
             <div className="col-md-6">
               <div className="card bg-dark text-white mb-4">
                 <div className="card-body">
-                  <h5 className="card-title">Our Vision</h5>
-                  <p className="card-text">
+                  <h5 className="card-title fw-bold">Our Vision</h5>
+                  <p className="card-text fw-medium">
                     We envision a world where all pets are cared for and live a life of
                     happiness and health in their forever homes. We also strive to build
                     a community that supports and promotes ethical pet ownership practices.
@@ -53,34 +53,31 @@ const AboutUs = () => {
 
           <div className="row text-center">
             <div className="col">
-              <h2>What We Do</h2>
-              <p>
+              <h2 className="fw-bold" style={{ fontSize: '2.5rem' }}>What We Do</h2>
+              <p className="fw-medium" style={{ fontSize: '1.25rem' }}>
                 At Pawsitive Heaven, we offer a variety of services to ensure that every pet
                 finds their forever home:
               </p>
-              <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+              <ul style={{ listStyle: 'none', paddingLeft: 0, fontWeight: 500, fontSize: '1.2rem' }}>
                 <li>
                   <strong>Pet Adoption:</strong> We help connect potential pet owners with
                   adoptable animals, ensuring each pet is placed in a safe, loving environment.
                 </li>
-                
-                
-                <li>
+                <li className="mt-2">
                   <strong>Pet Recommendation:</strong> We offer personalized recommendations
                   for food, toys, and clothes based on your pet's character traits, ensuring
                   they get the right items for a happy and healthy life.
                 </li>
-               
-                  
               </ul>
             </div>
           </div>
 
-          <div className="row text-center">
+
+          <div className="row text-center mt-5">
             <div className="col">
-              <h2>Contact Us</h2>
-              <p>If you have any questions, feel free to reach out to us!</p>
-              <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+              <h2 className="fw-bold">Contact Us</h2>
+              <p className="fw-medium">If you have any questions, feel free to reach out to us!</p>
+              <ul style={{ listStyle: 'none', paddingLeft: 0, fontWeight: 500 }}>
                 <li>
                   <strong>Email:</strong> support@pawsitiveheaven.com
                 </li>
@@ -93,12 +90,11 @@ const AboutUs = () => {
               </ul>
               <a
                 href="mailto:support@pawsitiveheaven.com"
-                className="btn btn-outline-light"
+                className="btn btn-outline-light fw-bold"
                 style={{
                   borderRadius: '30px',
                   padding: '10px 25px',
                   fontSize: '1.2rem',
-                  fontWeight: 'bold',
                 }}
               >
                 Get in Touch
@@ -118,15 +114,19 @@ const AboutUs = () => {
         }}
       >
         <div className="container">
-          <h2>Our Commitment</h2>
-          <p>
+          <h2 className="fw-bold">Our Commitment</h2>
+          <p className="fw-medium">
             At Pawsitive Heaven, we are committed to ensuring that every pet is treated with
             kindness and respect. We believe in the power of adoption to change lives and
             reduce the number of animals in need. Whether you are adopting, shopping, or
             seeking advice, we are here to help make pet care easier and more enjoyable for
             everyone.
           </p>
-          <a href="#subscribe" className="btn btn-success" style={{ borderRadius: '5px', padding: '10px 20px' }}>
+          <a
+            href="#subscribe"
+            className="btn btn-success fw-bold"
+            style={{ borderRadius: '5px', padding: '10px 20px' }}
+          >
             Subscribe Now
           </a>
         </div>

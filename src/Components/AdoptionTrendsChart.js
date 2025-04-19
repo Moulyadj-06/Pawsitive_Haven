@@ -35,7 +35,7 @@ const AdoptionTrendsChart = () => {
 
   return (
     <div style={{ width: "100%", height: "450px", padding: "20px" }}>
-      <h2 className="text-center mb-4">🐾 Monthly Pet Adoption Trends</h2>
+      <h2 className="text-center mb-4">🐾 Monthly Pet Adoption Trends🐾</h2>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={trendData}>
           <CartesianGrid strokeDasharray="3 3" />

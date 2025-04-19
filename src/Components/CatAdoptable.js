@@ -99,35 +99,33 @@ const CatAdoptable = () => {
   };
 
   return (
-    <Container className="mt-4">
+    <Container
+          fluid
+          className="py-4"
+          style={{
+            background: "linear-gradient(to bottom right,rgb(183, 53, 209), #ffffff)",
+            minHeight: "100vh",
+          }}
+        >
       <h2 className="text-center mb-4">🐱 Adoptable Cats</h2>
 
       {/* Back Button with Enhanced UI */}
-      <Button
-        variant="primary"
-        onClick={handleBackClick}
-        className="mb-4 d-flex align-items-center justify-content-center"
-        style={{
-          padding: "10px 20px",
-          borderRadius: "30px",
-          backgroundColor: "#007bff",
-          color: "white",
-          fontSize: "16px",
-          transition: "background-color 0.3s ease, transform 0.2s ease",
-          border: "none",
-        }}
-        onMouseOver={(e) => {
-          e.target.style.backgroundColor = "#0056b3"; // Darker blue on hover
-          e.target.style.transform = "scale(1.05)";
-        }}
-        onMouseOut={(e) => {
-          e.target.style.backgroundColor = "#007bff"; // Original blue
-          e.target.style.transform = "scale(1)";
-        }}
-      >
-        <i className="bi bi-arrow-left-circle" style={{ marginRight: "8px", fontSize: "18px" }}></i>
-        🔙 Back to Search Pets
-      </Button>
+      <div className="text-center mb-4">
+        <button
+          className="btn btn-primary btn-lg rounded-pill shadow-sm"
+          onClick={handleBackClick}
+          style={{
+            background: "linear-gradient(135deg, #0077b6, #005f83)",
+            border: "none",
+            transition: "0.3s ease-in-out",
+          }}
+          onMouseOver={(e) => (e.target.style.background = "#005f83")}
+          onMouseOut={(e) => (e.target.style.background = "#0077b6")}
+        >
+          <i className="bi bi-arrow-left-circle" style={{ marginRight: "8px", fontSize: "18px" }}></i>
+          🔙 Back to Search Pets
+        </button>
+      </div>
 
       <Row>
         {cats.map((cat, idx) => (

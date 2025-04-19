@@ -20,7 +20,7 @@ const AnimalTypeChart = ({ pets }) => {
 
   return (
     <div style={{ width: "100%", maxWidth: 400 }}>
-      <h3>🐾 Animal Type Distribution</h3>
+      <h3>🐾 Animal Type Distribution🐾</h3>
       <PieChart width={500} height={400}>
         <Pie
           dataKey="value"

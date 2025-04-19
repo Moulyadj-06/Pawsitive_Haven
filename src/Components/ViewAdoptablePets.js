@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Button, Form, Card, Container, Row, Col } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Form,
+  Card,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function ViewAdoptablePets() {
@@ -13,8 +21,11 @@ function ViewAdoptablePets() {
     address: "",
   });
   const [showModal, setShowModal] = useState(false);
-
   const navigate = useNavigate();
+
+  // 🔎 Utilities
+  const isValidPhoneNumber = (phone) => /^\d{10}$/.test(phone);
+  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
   useEffect(() => {
     axios
@@ -38,32 +49,31 @@ function ViewAdoptablePets() {
     });
   };
 
-  const isValidPhoneNumber = (phone) => /^\d{10}$/.test(phone);
-  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.phone || !formData.address) {
+    const { name, email, phone, address } = formData;
+
+    if (!name || !email || !phone || !address) {
       alert("⚠️ All fields are required!");
       return;
-    } 
+    }
 
-    if (!isValidPhoneNumber(formData.phone)) {
+    if (!isValidPhoneNumber(phone)) {
       alert("⚠️ Phone number must be exactly 10 digits!");
       return;
     }
 
-    if (!isValidEmail(formData.email)) {
+    if (!isValidEmail(email)) {
       alert("⚠️ Please enter a valid email address!");
       return;
     }
 
     const adoptionData = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      address: formData.address,
+      name,
+      email,
+      phone,
+      address,
       petName: selectedDog.Breed,
       petType: "Dog",
       breed: selectedDog.Breed,
@@ -74,13 +84,8 @@ function ViewAdoptablePets() {
     try {
       await axios.post("http://localhost:3001/api/adoptPet", adoptionData);
       alert(`🎉 Adoption Request for ${selectedDog.Breed} submitted successfully!`);
-      // Redirect after successful adoption based on pet type
-      if (adoptionData.petType === "Dog") {
-        navigate("/dog-recommendations");
-      } else {
-        navigate("/cat-recommendations");
-      }
-      handleCloseModal();  // Close the modal after submission
+      navigate("/dog-recommendations");
+      handleCloseModal();
     } catch (err) {
       console.error("❌ Error submitting adoption request:", err);
       alert("❌ Something went wrong. Please try again.");
@@ -88,55 +93,56 @@ function ViewAdoptablePets() {
   };
 
   const handleBackClick = () => {
-    navigate("/search-pet"); // Navigate to the SearchAPet page when back button is clicked
+    navigate("/search-pet");
   };
 
   return (
-    <Container className="mt-4">
+    <Container
+      fluid
+      className="py-4"
+      style={{
+        background: "linear-gradient(to bottom right,rgb(183, 53, 209), #ffffff)",
+        minHeight: "100vh",
+      }}
+    >
       <h2 className="text-center mb-4">🐾 Adoptable Dogs</h2>
 
-      {/* Back Button with Enhanced UI */}
-      <Button
-        variant="primary"
-        onClick={handleBackClick}
-        className="mb-4 d-flex align-items-center justify-content-center"
-        style={{
-          padding: "10px 20px",
-          borderRadius: "30px",
-          backgroundColor: "#007bff",
-          color: "white",
-          fontSize: "16px",
-          transition: "background-color 0.3s ease, transform 0.2s ease",
-          border: "none",
-        }}
-        onMouseOver={(e) => {
-          e.target.style.backgroundColor = "#0056b3"; // Darker blue on hover
-          e.target.style.transform = "scale(1.05)";
-        }}
-        onMouseOut={(e) => {
-          e.target.style.backgroundColor = "#007bff"; // Original blue
-          e.target.style.transform = "scale(1)";
-        }}
-      >
-        <i className="bi bi-arrow-left-circle" style={{ marginRight: "8px", fontSize: "18px" }}></i>
-        🔙 Back to Search Pets
-      </Button>
+      <div className="text-center mb-4">
+        <button
+          className="btn btn-primary btn-lg rounded-pill shadow-sm"
+          onClick={handleBackClick}
+          style={{
+            background: "linear-gradient(135deg, #0077b6, #005f83)",
+            border: "none",
+            transition: "0.3s ease-in-out",
+          }}
+          onMouseOver={(e) => (e.target.style.background = "#005f83")}
+          onMouseOut={(e) => (e.target.style.background = "#0077b6")}
+        >
+          <i className="bi bi-arrow-left-circle" style={{ marginRight: "8px", fontSize: "18px" }}></i>
+          🔙 Back to Search Pets
+        </button>
+      </div>
 
       <Row>
         {dogs.length > 0 ? (
           dogs.map((dog, index) => (
             <Col key={index} md={4} className="mb-4">
-              <Card className="shadow-lg">
+              <Card
+                className="shadow-lg border-0"
+                style={{ borderRadius: "20px", backgroundColor: "#fef9f4" }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#fff3e6"}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#fef9f4"}
+              >
                 <Card.Body>
-                   {/* Dog Image */}
-    <div className="text-center mb-3">
-      <img 
-        src={`/images/renamed_pets/pets/${dog.Breed.replace(/\s/g, "")}.jpeg`}
-        alt={dog.Breed}
-        style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-        onError={(e) => { e.target.src = "/images/default.jpg"; }} // fallback image
-      />
-    </div>
+                  <div className="text-center mb-3">
+                    <img
+                      src={`/images/renamed_pets/pets/${dog.Breed.replace(/\s+/g, "")}.jpeg`}
+                      alt={dog.Breed}
+                      style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+                      onError={(e) => { e.target.src = "/images/default.jpg"; }}
+                    />
+                  </div>
                   <Card.Title><strong>Breed:</strong> {dog.Breed}</Card.Title>
                   <Card.Text>
                     <strong>Country:</strong> {dog["Country of Origin"]} <br />
@@ -159,7 +165,7 @@ function ViewAdoptablePets() {
         )}
       </Row>
 
-      {/* Adoption Modal */}
+      {/* Modal */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Adopt {selectedDog?.Breed}</Modal.Title>
@@ -172,6 +178,7 @@ function ViewAdoptablePets() {
                 type="text"
                 placeholder="Enter full name"
                 value={formData.name}
+                autoFocus
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
             </Form.Group>

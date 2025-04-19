@@ -25,7 +25,7 @@ const MostChosenAnimalsChart = ({ pets }) => {
 
   return (
     <div style={{ width: "100%", maxWidth: 800, margin: "0 auto" }}>
-      <h3 style={{ textAlign: "center" }}>Top 10 Most Chosen Animals (Breeds)</h3>
+      <h3 style={{ textAlign: "center" }}>🐾Top 10 Most Chosen Animals (Breeds)🐾</h3>
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
           layout="vertical"

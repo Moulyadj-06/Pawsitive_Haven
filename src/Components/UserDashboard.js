@@ -4,8 +4,7 @@ import axios from "axios";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useNavigate } from "react-router-dom";
 
-
-const UserDashboard= () => {
+const UserDashboard = () => {
   const [pets, setPets] = useState([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -73,20 +72,26 @@ const UserDashboard= () => {
   );
 
   return (
-    <div className="container mt-4">
-        <button
-    className="btn btn-outline-secondary btn-sm"
+    <div className="container-fluid min-vh-100"
     style={{
-      borderRadius: "20px",
-      padding: "8px 16px",
-      fontWeight: "bold",
-      boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-    }}
-    onClick={() => navigate("/")}
-  >
-    ⬅️ Back to Dashboard
-  </button>
-      <h2 className="text-center mb-4">🐾 Pet Adoption Dashboard 🐾</h2>
+      background: "linear-gradient(135deg, rgb(187, 75, 212), rgb(255, 100, 179))",
+      borderRadius: "8px",
+      paddingBottom: "50px", // To prevent content from getting too close to the bottom
+    }}>
+      <button
+         className="btn btn-primary btn-lg rounded-pill shadow-sm"
+        style={{
+          background: "linear-gradient(135deg, #0077b6, #005f83)", // Project-matching button color
+          border: "none",
+          transition: "0.3s ease-in-out",
+        }}
+        onMouseOver={(e) => (e.target.style.background = "#005f83")}
+        onMouseOut={(e) => (e.target.style.background = "#0077b6")}
+        onClick={() => navigate("/")}
+      >
+        ⬅️ Back to Dashboard
+      </button>
+      <h2 className="text-center mb-4 text-light">✨ Paws Adoption Hub ✨</h2>
 
       {/* ✅ Search Bar */}
       <div className="mb-3">
@@ -101,19 +106,19 @@ const UserDashboard= () => {
       {/* ✅ Summary Cards */}
       <div className="row text-center">
         <div className="col-md-4">
-          <div className="card bg-success text-white p-3">
+          <div className="card bg-success text-white p-3 shadow-lg">
             <h4>Total Pets</h4>
             <h2>{filteredPets.length}</h2>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card bg-primary text-white p-3">
+          <div className="card bg-primary text-white p-3 shadow-lg">
             <h4>Adopted</h4>
             <h2>{adoptedPets}</h2>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card bg-danger text-white p-3">
+          <div className="card bg-danger text-white p-3 shadow-lg">
             <h4>Lost</h4>
             <h2>{lostPets}</h2>
           </div>
@@ -122,7 +127,7 @@ const UserDashboard= () => {
 
       {/* ✅ Bar Chart */}
       <div className="mt-4">
-        <h4 className="text-center">📊 Pet Adoption Statistics</h4>
+        <h4 className="text-center text-light">📊 Pet Adoption Statistics</h4>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
             <XAxis dataKey="name" />
@@ -136,13 +141,18 @@ const UserDashboard= () => {
 
       {/* ✅ Pet List with Infinite Scroll */}
       <div className="mt-4">
-        <h4 className="text-center">🐶 Pet List</h4>
+        <h4 className="text-center text-light">🐶 Pet List</h4>
         <ul className="list-group">
           {filteredPets.map((pet, index) => (
             <li
               key={index}
               className="list-group-item d-flex justify-content-between align-items-center"
               ref={index === filteredPets.length - 1 ? lastPetRef : null} // Attach observer to last item
+              style={{
+                background: "linear-gradient(135deg,rgb(45, 92, 139),rgb(72, 106, 139))",
+                color: "#fff",
+                borderBottom: "2px solid #444",
+              }}
             >
               <span>{pet.Animal_Name} ({pet.animal_type}) - {pet.City}</span>
               <span className={`badge bg-${pet.Record_Type === "ADOPTED" ? "primary" : "danger"}`}>
@@ -154,7 +164,7 @@ const UserDashboard= () => {
       </div>
 
       {/* ✅ Loading Indicator */}
-      {loading && <p className="text-center mt-3">🔄 Loading more pets...</p>}
+      {loading && <p className="text-center mt-3 text-light">🔄 Loading more pets...</p>}
     </div>
   );
 };
