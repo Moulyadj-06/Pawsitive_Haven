@@ -78,7 +78,7 @@ const NavigationBar = () => {
               Search a Pet
             </Nav.Link>
 
-            <Nav.Link
+            {/* <Nav.Link
               as={Link}
               to="/about-us"
               style={{
@@ -106,6 +106,38 @@ const NavigationBar = () => {
               }}
             >
               Admin Login
+            </Nav.Link> */}
+
+
+
+            <Nav.Link
+              as={Link}
+              to="/cat-recommendations"
+              style={{
+                color: location.pathname === "/cat-recommendations" ? "#fff" : "#f1f1f1",
+                fontSize: "1.1rem",
+                fontWeight: "500",
+                padding: "8px 15px",
+                borderBottom: location.pathname === "/cat-recommendations" ? "2px solid white" : "none",
+                transition: "0.3s",
+              }}
+            >
+              cat-recommendations
+            </Nav.Link>
+
+            <Nav.Link
+              as={Link}
+              to="/dog-recommendations"
+              style={{
+                color: location.pathname === "/dog-recommendations" ? "#fff" : "#f1f1f1",
+                fontSize: "1.1rem",
+                fontWeight: "500",
+                padding: "8px 15px",
+                borderBottom: location.pathname === "/dog-recommendations" ? "2px solid white" : "none",
+                transition: "0.3s",
+              }}
+            >
+              dog recommendations
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
