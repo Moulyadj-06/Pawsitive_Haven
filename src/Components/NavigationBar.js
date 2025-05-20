@@ -78,7 +78,7 @@ const NavigationBar = () => {
               Search a Pet
             </Nav.Link>
 
-            {/* <Nav.Link
+            <Nav.Link
               as={Link}
               to="/about-us"
               style={{
@@ -106,11 +106,13 @@ const NavigationBar = () => {
               }}
             >
               Admin Login
-            </Nav.Link> */}
+            </Nav.Link> 
 
 
+            
 
-            <Nav.Link
+
+            {/* <Nav.Link
               as={Link}
               to="/cat-recommendations"
               style={{
@@ -138,7 +140,9 @@ const NavigationBar = () => {
               }}
             >
               dog recommendations
-            </Nav.Link>
+            </Nav.Link> */}
+
+
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -128,29 +128,49 @@ const CatAdoptable = () => {
       </div>
 
       <Row>
-        {cats.map((cat, idx) => (
-          <Col md={4} lg={3} sm={6} xs={12} key={idx} className="mb-4">
-            <Card>
-              <Card.Body>
-                <Card.Title>{cat.name}</Card.Title>
-                <Card.Text>
-                  <strong>Breed:</strong> {cat.Breed} <br />
-                  <strong>Origin:</strong> {cat.origin} <br />
-                  <strong>Life Span:</strong> {cat.min_life_expectancy} - {cat.max_life_expectancy} years <br />
-                  <strong>Weight:</strong> {cat.min_weight} - {cat.max_weight} kg <br />
-                  <strong>Family Friendly:</strong> {cat.family_friendly}/5 <br />
-                  <strong>Grooming:</strong> {cat.grooming}/5 <br />
-                  <strong>Intelligence:</strong> {cat.intelligence}/5 <br />
-                </Card.Text>
-                <Button variant="success" onClick={() => handleAdopt(cat)}>
-                  🐱 Adopt This Cat
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+        {cats.length > 0 ? (
+          cats.map((cat, index) => (
+            <Col key={index} md={4} className="mb-4">
+              <Card
+                className="shadow-lg border-0"
+                style={{ borderRadius: "20px", backgroundColor: "#fef9f4" }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#fff3e6")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fef9f4")}
+              >
+                <Card.Body>
+                  <div className="text-center mb-3">
+                  <img
+                    src={`/images/renamed_pets/pets2/${cat.name ? cat.name.replace(/\s+/g, "") : "default"}.jpeg`}
+                    alt={cat.name}
+                    style={{ width: "80%", height: "370px", objectFit: "cover", borderRadius: "8px" }}
+                    onError={(e) => { e.target.src = "/images/default.jpg"; }}
+                  />
 
+                  </div>
+                  <Card.Title> <strong>Breed:</strong> {cat.name}</Card.Title>
+                  <Card.Text>
+                    <strong>Breed:</strong> {cat.Breed} <br />
+                    <strong>Origin:</strong> {cat.origin} <br />
+                    <strong>Life Span:</strong> {cat.min_life_expectancy} - {cat.max_life_expectancy} years <br />
+                    <strong>Weight:</strong> {cat.min_weight} - {cat.max_weight} kg <br />
+                    <strong>Family Friendly:</strong> {cat.family_friendly}/5 <br />
+                    <strong>Grooming:</strong> {cat.grooming}/5 <br />
+                    <strong>Intelligence:</strong> {cat.intelligence}/5 <br />
+                  </Card.Text>
+                  <div className="text-center">
+                    <Button variant="success" onClick={() => handleAdopt(cat)}>
+                      🐱 Adopt This Cat
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))
+        ) : (
+        <p className="text-center">No adoptable cats available right now 🐾</p>
+      )}
+    </Row>
+            
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>🐱 Adopt {selectedCat?.name}</Modal.Title>

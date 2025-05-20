@@ -1,11 +1,14 @@
 import React from "react";
 import { Container, Row, Col, Card, Navbar, Nav } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const DogRecommendation = () => {
+  const navigate = useNavigate();
+
   return (
     <div style={{ fontFamily: "sans-serif", backgroundColor: "#343a40", scrollBehavior: "smooth" }}>
           {/* Navbar */}
-          <Navbar bg="dark" expand="lg" className="px-4 py-3 shadow-sm"> {/* fixed-top */}
+          <Navbar bg="dark" expand="lg" className="px-4 py-3 shadow-sm fixed-top"> {/* fixed-top */}
         <Navbar.Brand href="#" style={{ color: "white", fontWeight: "bold" }}>
           Dog World
         </Navbar.Brand>
@@ -20,6 +23,24 @@ const DogRecommendation = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+
+      {/* Back Button */}
+      <div className="text-center mt-5 pt-5">
+        <button
+          className="btn btn-primary btn-lg rounded-pill shadow-sm"
+          onClick={() => navigate("/view-adoptable-pets")}
+          style={{
+            background: "linear-gradient(135deg, #0077b6, #005f83)",
+            border: "none",
+            transition: "0.3s ease-in-out",
+          }}
+          onMouseOver={(e) => (e.target.style.background = "#005f83")}
+          onMouseOut={(e) => (e.target.style.background = "#0077b6")}
+        >
+          ← Dog Adopt
+        </button>
+      </div>
+
 
       {/* Hero / Home */}
       <div id="home" className="d-flex flex-column flex-md-row align-items-center justify-content-between px-5 py-4" style={{ backgroundColor: "#ffe8f0" }}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Card } from "react-bootstrap";
+import { Form, Button, Container, Card, Row, Col } from "react-bootstrap";
 import { FaFilter } from "react-icons/fa";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -73,14 +73,82 @@ const SearchAPet = () => {
     <div
       style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #ffdde1, #ee9ca7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2rem",
+        background: "linear-gradient(135deg,rgb(126, 188, 214),rgb(86, 157, 185))",
+        padding: "2rem 0",
       }}
     >
-      <Container style={{ maxWidth: "600px" }}>
+      {/* Hero Section */}
+      <div style={{
+      width: "100%",
+      maxWidth: "1200px", // Adjust width as needed
+      margin: "0 auto",   // Center the container
+      padding: "60px 40px",
+      background: "linear-gradient(to right, #87CEEB, #4169E1)",
+      borderRadius: "20px", // Rounded corners
+      boxShadow: "0 0 20px rgba(0, 0, 0, 0.5)",
+      textAlign: "center",
+      color: "#fff", // White text for contrast
+      fontFamily: "'Poppins', sans-serif"
+    }}>
+      <motion.h1 
+        style={{
+          fontSize: "2.5rem",
+          fontWeight: "700", // or use "bold" (both work, but choose one)
+          color: "#133b5c",
+          marginBottom: "20px",
+          textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
+          fontFamily: "'Poppins', sans-serif" // Optional: Ensure consistent typography
+        }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        Find Your Perfect Pet Companion 🐾
+      </motion.h1>
+
+      <motion.p
+        style={{
+          fontSize: "1.2rem",
+          lineHeight: "1.6",
+          maxWidth: "800px",
+          color: "#133b5c", 
+          fontWeight: "bold",
+          margin: "0 auto"
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
+        For every home, there's a special pet waiting. They come through our doors and stay until they find their forever family!
+      </motion.p>
+
+      {/* Optional decorative elements */}
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "25px",
+        gap: "15px"
+      }}>
+        {["🐶", "🐱", "🐰"].map((emoji, index) => (
+          <motion.span
+            key={index}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ 
+              duration: 2, 
+              repeat: Infinity, 
+              delay: index * 0.3 
+            }}
+            style={{ fontSize: "2rem" }}
+          >
+            {emoji}
+          </motion.span>
+        ))}
+      </div>
+    </div>
+
+
+      {/* Filter Form */}
+      <Container style={{ maxWidth: "600px" }} className="mb-5">
         <motion.h2
           className="text-center mb-4"
           initial={{ opacity: 0, y: -20 }}
@@ -99,9 +167,9 @@ const SearchAPet = () => {
           className="p-4 shadow-lg"
           style={{
             borderRadius: "20px",
-            background: "rgba(255, 255, 255, 0.75)",
-            backdropFilter: "blur(12px)",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
+            background: "rgba(255, 255, 255, 0.6)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(26, 115, 232, 0.3)",
           }}
         >
           <Form>
@@ -203,7 +271,7 @@ const SearchAPet = () => {
                 variant="primary"
                 className="w-100"
                 style={{
-                  background: "#ff6f91",
+                  background: "#1a73e8",
                   border: "none",
                   borderRadius: "10px",
                   padding: "10px 0",
@@ -216,6 +284,77 @@ const SearchAPet = () => {
           </Form>
         </Card>
       </Container>
+
+      {/* Featured Pets */}
+      <Container className="my-5" style={{ maxWidth: "1000px" }}>
+        <h2 className="text-center mb-5" style={{ color: "#133b5c" }}>
+          🐾 Pets Waiting for You
+        </h2>
+
+        <Row className="g-4">
+        {['Esme and Ralda', 'Layla', 'Brown', 'Roy', 'Kristen', 'Jack and Daniel'].map((pet, index) => (
+        <Col md={4} key={index}>
+          <Card className="shadow-sm border-0" style={{ borderRadius: "15px" }}>
+            <Card.Img 
+              variant="top" 
+              src={`/images/renamed_pets/${pet.toLowerCase().replace(/\s+/g, '-')}.jpeg`}
+              alt={`${pet} the pet`}
+              style={{ 
+                height: "250px",
+                objectFit: "cover",
+                borderTopLeftRadius: "15px",
+                borderTopRightRadius: "15px" 
+             
+              }}
+            />
+            <Card.Body className="text-center">
+              <h4 className="mb-0">{pet}</h4>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+        </Row>
+      </Container>
+
+     {/* Contact Section */}
+        <Container
+          className="py-5"
+          style={{
+            background: "linear-gradient(135deg, #2a9d8f, #264653)",
+            color: "#000000",
+            maxWidth: "1200px",
+            borderRadius: "15px",
+            boxShadow: "0 0 20px rgba(0, 0, 0, 0.5)",
+          }}
+        >
+          <Row>
+            <Col md={6}>
+              <h3 className="mb-4" style={{ color: "#ffffff" }}>📬 Contact Information</h3>
+              <p>📍 Street: K.Narayanapura, Bengaluru-560077</p>
+              <p>🏙️ County: Happy Country India</p>
+              <p>📧 Email: <a href="mailto:contact@petadopt.org" style={{ color: "#4dabf7" }}>contact@petadopt.org</a></p>
+            </Col>
+            <Col md={6}>
+              <h3 className="mb-4" style={{ color: "#ffffff" }}>🤝 Our Supporters</h3>
+              <Row>
+                {['Priyanka Anand', 'Moulya Shree DJ', 'Anupama. R', 'Beulah Mercy'].map((supporter, index) => (
+                  <Col xs={6} key={index}>
+                    <div
+                      className="mb-3"
+                      style={{
+                        color: "#ffd700",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {supporter}
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+
     </div>
   );
 };
