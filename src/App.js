@@ -10,6 +10,7 @@ import CatAdoptable from "./Components/CatAdoptable"; // ✅ Import the CatAdopt
 import PowerBIReport from "./Components/PowerBiReport";
 import SearchAPet from "./Components/SearchAPet";
 import AdminLogin from "./Components/AdminLogin";
+import Services from "./Components/Services";
 import AdminDashboard from "./Components/AdminDashboard";
 import DogRecommendation from "./Components/DogRecommendation";
 import CatRecommendation from "./Components/CatRecommendation";
@@ -42,6 +43,7 @@ function App() {
         <Route path="/view-adoptable-pets" element={<ViewAdoptablePets />} />
         <Route path="/view-cat-adoptable-pets" element={<CatAdoptable />} />  {/* ✅ New route added */}
         <Route path="/powerbi" element={<PowerBIReport pets={pets} />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/about-us" element={<AboutUs />} />
 

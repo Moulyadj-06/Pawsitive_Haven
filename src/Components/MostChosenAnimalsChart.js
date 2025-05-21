@@ -1,47 +1,60 @@
 import React from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  CartesianGrid,
-  LabelList
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-const MostChosenAnimalsChart = ({ pets }) => {
-  const breedCounts = pets.reduce((acc, pet) => {
-    const breed = pet.Animal_Breed || "Unknown Breed";
-    acc[breed] = (acc[breed] || 0) + 1;
-    return acc;
-  }, {});
+// Animal Type Distribution Data
+const typeData = [
+  { name: "Dog", value: 276 },
+  { name: "Cat", value: 250 },
+  { name: "Lionhead", value: 80 },
+  { name: "Bird", value: 44 },
+  { name: "Rabbit Sh", value: 38 },
+  { name: "Deceased Bird", value: 34 },
+  { name: "Deceased Cat", value: 34 },
+  { name: "Equine", value: 30 },
+  { name: "Barn Cat", value: 22 },
+  { name: "Deceased Dog", value: 16 },
+  { name: "Rabbit", value: 14 }
+];
 
-  const data = Object.entries(breedCounts)
-    .map(([breed, count]) => ({ breed, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 10); // Top 10 breeds
+// Define COLORS array for chart cells
+const COLORS = [
+  "#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28EFF",
+  "#FF6666", "#66CC99", "#FFB3E6", "#9999FF", "#FF9966", "#66B3FF"
+];
 
+const MostChosenAnimalsChart = () => {
   return (
-    <div style={{ width: "100%", maxWidth: 800, margin: "0 auto" }}>
-      <h3 style={{ textAlign: "center" }}>🐾Top 10 Most Chosen Animals (Breeds)🐾</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart
-          layout="vertical"
-          data={data}
-          margin={{ top: 20, right: 50, left: 80, bottom: 20 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" />
-          <YAxis dataKey="breed" type="category" width={150} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="count" fill="#8884d8">
-            <LabelList dataKey="count" position="right" />
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+      {/* First Row */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginBottom: "30px" }}>
+        {/* Animal Type Distribution */}
+        <div style={{ flex: 1, minWidth: "300px" }}>
+          <h2 style={{ textAlign: "center" }}> 🐾 Animal Type Distribution 🐾</h2>
+          <div style={{ height: "400px" }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={typeData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={150}
+                  fill="#8884d8"
+                  dataKey="value"
+                  nameKey="name"
+                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                >
+                  {typeData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

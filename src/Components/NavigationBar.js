@@ -9,41 +9,55 @@ const NavigationBar = () => {
     <Navbar
       expand="lg"
       style={{
-        background: "linear-gradient(90deg, #f8b500, #ff6b81)",
+        background: "#ffffff",
         padding: "10px 20px",
-        borderRadius: "10px",
+        borderRadius: "0 0 15px 15px",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+        borderBottom: "3px solid rgba(0, 0, 0, 0.05)"
       }}
-      className="shadow-sm"
     >
       <Container>
         <Navbar.Brand
           as={Link}
           to="/"
           style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "#fff",
-            textShadow: "1px 1px 5px rgba(0,0,0,0.3)",
+            fontSize: "1.8rem",
+            fontWeight: "700",
+            color: "#4a00e0",
+            letterSpacing: "1px",
+            transition: "all 0.3s ease",
+            fontFamily: "'Poppins', sans-serif"
           }}
+          className="hover-glow"
         >
           🐾 Pet Adoption
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="navbar-nav" className="border-0" />
+        <Navbar.Toggle 
+          aria-controls="navbar-nav" 
+          className="border-0"
+          style={{
+            color: "#4a00e0",
+          }}
+        />
 
         <Navbar.Collapse id="navbar-nav" className="justify-content-center">
-          <Nav className="gap-3">
+          <Nav className="gap-1">
             <Nav.Link
               as={Link}
               to="/"
               style={{
-                color: location.pathname === "/" ? "#fff" : "#f1f1f1",
+                color: location.pathname === "/" ? "#4a00e0" : "#555",
                 fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/" ? "2px solid white" : "none",
-                transition: "0.3s",
+                fontWeight: "600",
+                padding: "10px 20px",
+                borderRadius: "8px",
+                background: location.pathname === "/" ? "rgba(74, 0, 224, 0.1)" : "transparent",
+                borderBottom: location.pathname === "/" ? "3px solid #ff9a9e" : "none",
+                transition: "all 0.3s ease",
+                margin: "0 5px",
               }}
+              className="nav-link-hover"
             >
               Dashboard
             </Nav.Link>
@@ -52,13 +66,17 @@ const NavigationBar = () => {
               as={Link}
               to="/powerbi"
               style={{
-                color: location.pathname === "/powerbi" ? "#fff" : "#f1f1f1",
+                color: location.pathname === "/powerbi" ? "#4a00e0" : "#555",
                 fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/powerbi" ? "2px solid white" : "none",
-                transition: "0.3s",
+                fontWeight: "600",
+                padding: "10px 20px",
+                borderRadius: "8px",
+                background: location.pathname === "/powerbi" ? "rgba(74, 0, 224, 0.1)" : "transparent",
+                borderBottom: location.pathname === "/powerbi" ? "3px solid #a18cd1" : "none",
+                transition: "all 0.3s ease",
+                margin: "0 5px",
               }}
+              className="nav-link-hover"
             >
               Analytics
             </Nav.Link>
@@ -67,13 +85,17 @@ const NavigationBar = () => {
               as={Link}
               to="/search-pet"
               style={{
-                color: location.pathname === "/search-pet" ? "#fff" : "#f1f1f1",
+                color: location.pathname === "/search-pet" ? "#4a00e0" : "#555",
                 fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/search-pet" ? "2px solid white" : "none",
-                transition: "0.3s",
+                fontWeight: "600",
+                padding: "10px 20px",
+                borderRadius: "8px",
+                background: location.pathname === "/search-pet" ? "rgba(74, 0, 224, 0.1)" : "transparent",
+                borderBottom: location.pathname === "/search-pet" ? "3px solid #84fab0" : "none",
+                transition: "all 0.3s ease",
+                margin: "0 5px",
               }}
+              className="nav-link-hover"
             >
               Search a Pet
             </Nav.Link>
@@ -82,13 +104,17 @@ const NavigationBar = () => {
               as={Link}
               to="/about-us"
               style={{
-                color: location.pathname === "/about-us" ? "#fff" : "#f1f1f1",
+                color: location.pathname === "/about-us" ? "#4a00e0" : "#555",
                 fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/about-us" ? "2px solid white" : "none",
-                transition: "0.3s",
+                fontWeight: "600",
+                padding: "10px 20px",
+                borderRadius: "8px",
+                background: location.pathname === "/about-us" ? "rgba(74, 0, 224, 0.1)" : "transparent",
+                borderBottom: location.pathname === "/about-us" ? "3px solid #fbc2eb" : "none",
+                transition: "all 0.3s ease",
+                margin: "0 5px",
               }}
+              className="nav-link-hover"
             >
               About Us
             </Nav.Link>
@@ -97,55 +123,40 @@ const NavigationBar = () => {
               as={Link}
               to="/admin-login"
               style={{
-                color: location.pathname === "/admin-login" ? "#fff" : "#f1f1f1",
+                color: location.pathname === "/admin-login" ? "#4a00e0" : "#555",
                 fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/admin-login" ? "2px solid white" : "none",
-                transition: "0.3s",
+                fontWeight: "600",
+                padding: "10px 20px",
+                borderRadius: "8px",
+                background: location.pathname === "/admin-login" ? "rgba(74, 0, 224, 0.1)" : "transparent",
+                borderBottom: location.pathname === "/admin-login" ? "3px solid #f6d365" : "none",
+                transition: "all 0.3s ease",
+                margin: "0 5px",
               }}
+              className="nav-link-hover"
             >
               Admin Login
-            </Nav.Link> 
-
-
-            
-
-
-            {/* <Nav.Link
-              as={Link}
-              to="/cat-recommendations"
-              style={{
-                color: location.pathname === "/cat-recommendations" ? "#fff" : "#f1f1f1",
-                fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/cat-recommendations" ? "2px solid white" : "none",
-                transition: "0.3s",
-              }}
-            >
-              cat-recommendations
             </Nav.Link>
-
-            <Nav.Link
-              as={Link}
-              to="/dog-recommendations"
-              style={{
-                color: location.pathname === "/dog-recommendations" ? "#fff" : "#f1f1f1",
-                fontSize: "1.1rem",
-                fontWeight: "500",
-                padding: "8px 15px",
-                borderBottom: location.pathname === "/dog-recommendations" ? "2px solid white" : "none",
-                transition: "0.3s",
-              }}
-            >
-              dog recommendations
-            </Nav.Link> */}
-
-
           </Nav>
         </Navbar.Collapse>
       </Container>
+
+      {/* Add this to your global CSS or style tag */}
+      <style>{`
+        .hover-glow:hover {
+          text-shadow: 0 0 5px rgba(74, 0, 224, 0.3);
+          transform: scale(1.02);
+        }
+        .nav-link-hover:hover {
+          background: rgba(74, 0, 224, 0.08) !important;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+          color: #4a00e0 !important;
+        }
+        .navbar-toggler:focus {
+          box-shadow: 0 0 0 0.25rem rgba(74, 0, 224, 0.2);
+        }
+      `}</style>
     </Navbar>
   );
 };
