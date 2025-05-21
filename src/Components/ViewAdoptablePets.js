@@ -139,8 +139,8 @@ function ViewAdoptablePets() {
                     <img
                       src={`/images/renamed_pets/pets/${dog.Breed.replace(/\s+/g, "")}.jpeg`}
                       alt={dog.Breed}
-                      style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-                      onError={(e) => { e.target.src = "/images/default.jpg"; }}
+                      style={{ width: "auto", height: "200px", borderRadius: "8px" }}
+                      // onError={(e) => { e.target.src = "/images/default.jpg"; }}
                     />
                   </div>
                   <Card.Title><strong>Breed:</strong> {dog.Breed}</Card.Title>

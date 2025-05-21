@@ -142,8 +142,8 @@ const CatAdoptable = () => {
                   <img
                     src={`/images/renamed_pets/pets2/${cat.name ? cat.name.replace(/\s+/g, "") : "default"}.jpeg`}
                     alt={cat.name}
-                    style={{ width: "80%", height: "370px", objectFit: "cover", borderRadius: "8px" }}
-                    onError={(e) => { e.target.src = "/images/default.jpg"; }}
+                    style={{ width: "auto", height: "200px", borderRadius: "8px" }}
+                    // onError={(e) => { e.target.src = "/images/default.jpg"; }}
                   />
 
                   </div>

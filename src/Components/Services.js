@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { 
   Container, Row, Col, Card, Carousel, Button, Form 
 } from 'react-bootstrap';
@@ -6,6 +7,174 @@ import {
   FaPhone, FaEnvelope, FaMapMarkerAlt, FaHeart
 } from 'react-icons/fa';
 import { GiDogBowl, GiCat } from 'react-icons/gi';
+
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: ''
+  });
+  
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      console.log('Form submitted:', formData);
+      setIsLoading(false);
+      setIsSubmitted(true);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: ''
+        });
+      }, 5000);
+    }, 1500);
+  };
+
+  return (
+    <Card className="border-0 shadow-sm h-100" style={{
+      background: 'rgba(255, 255, 255, 0.8)',
+      backdropFilter: 'blur(5px)'
+    }}>
+      <Card.Body className="p-4">
+        {isSubmitted ? (
+          <div className="text-center py-4">
+            <div className="mb-4">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#4CAF50" />
+                <path d="M8 12L11 15L16 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <h3 className="text-success mb-3">Thank You!</h3>
+            <p className="lead">Your message has been submitted successfully.</p>
+            <p>We'll get back to you soon.</p>
+            <div className="mt-4">
+              <FaPaw className="text-primary me-2" />
+              <FaPaw className="text-primary me-2" />
+              <FaPaw className="text-primary" />
+            </div>
+          </div>
+        ) : (
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Your Name</Form.Label>
+              <Form.Control 
+                type="text" 
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name" 
+                className="border-0 shadow-sm"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control 
+                type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email" 
+                className="border-0 shadow-sm"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control 
+                type="tel" 
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Enter your phone number" 
+                className="border-0 shadow-sm"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Service Needed</Form.Label>
+              <Form.Select 
+                className="border-0 shadow-sm"
+                name="service"
+                value={formData.service}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select a service</option>
+                <option value="Dog Walking">Dog Walking</option>
+                <option value="Pet Sitting">Pet Sitting</option>
+                <option value="Overnight Care">Overnight Care</option>
+                <option value="Pet Medical">Pet Medical</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Message</Form.Label>
+              <Form.Control 
+                as="textarea" 
+                rows={3} 
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Your message" 
+                className="border-0 shadow-sm"
+                required
+              />
+            </Form.Group>
+            <Button 
+              variant="primary" 
+              type="submit"
+              className="w-100 fw-bold position-relative overflow-hidden"
+              disabled={isLoading}
+              style={{
+                background: 'linear-gradient(45deg, #1976d2, #0d47a1)',
+                border: 'none',
+                transition: 'all 0.3s'
+              }}
+            >
+              {isLoading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <span className="position-absolute top-0 end-0 bg-white bg-opacity-25 w-100 h-100" 
+                    style={{ transform: 'translateX(100%)', transition: 'transform 0.3s' }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'translateX(0)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'translateX(100%)'}>
+                  </span>
+                </>
+              )}
+            </Button>
+          </Form>
+        )}
+      </Card.Body>
+    </Card>
+  );
+};
 
 const Services = () => {
   // Services data
@@ -283,7 +452,7 @@ const Services = () => {
                     </div>
                     <div>
                       <h5 className="mb-1">Business Email</h5>
-                      <p className="text-muted mb-0">contact@mpawsitive_haven.com</p>
+                      <p className="text-muted mb-0">contact@pawsitive_haven.com</p>
                     </div>
                   </div>
                   <div className="mb-4 d-flex align-items-center">
@@ -292,7 +461,7 @@ const Services = () => {
                     </div>
                     <div>
                       <h5 className="mb-1">Location</h5>
-                      <p className="text-muted mb-0">K Narayanapyura, 560077</p>
+                      <p className="text-muted mb-0">K Narayanapura, 560077</p>
                     </div>
                   </div>
                   <div className="mt-4 text-center">
@@ -304,81 +473,7 @@ const Services = () => {
               </Card>
             </Col>
             <Col lg={6}>
-              <Card className="border-0 shadow-sm h-100" style={{
-                background: 'rgba(255, 255, 255, 0.8)',
-                backdropFilter: 'blur(5px)'
-              }}>
-                <Card.Body className="p-4">
-                  <Form>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Your Name</Form.Label>
-                      <Form.Control 
-                        type="text" 
-                        placeholder="Enter your name" 
-                        className="border-0 shadow-sm"
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Email Address</Form.Label>
-                      <Form.Control 
-                        type="email" 
-                        placeholder="Enter your email" 
-                        className="border-0 shadow-sm"
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Phone Number</Form.Label>
-                      <Form.Control 
-                        type="tel" 
-                        placeholder="Enter your phone number" 
-                        className="border-0 shadow-sm"
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Service Needed</Form.Label>
-                      <Form.Select className="border-0 shadow-sm">
-                        <option>Select a service</option>
-                        <option>Dog Walking</option>
-                        <option>Pet Sitting</option>
-                        <option>Overnight Care</option>
-                        <option>Pet Medical</option>
-                      </Form.Select>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Message</Form.Label>
-                      <Form.Control 
-                        as="textarea" 
-                        rows={3} 
-                        placeholder="Your message" 
-                        className="border-0 shadow-sm"
-                      />
-                    </Form.Group>
-                    <Button 
-                      variant="primary" 
-                      type="submit"
-                      className="w-100 fw-bold position-relative overflow-hidden"
-                      style={{
-                        background: 'linear-gradient(45deg, #1976d2, #0d47a1)',
-                        border: 'none',
-                        transition: 'all 0.3s'
-                      }}
-                      onMouseEnter={e => {
-                        e.target.style.background = 'linear-gradient(45deg, #0d47a1, #1976d2)';
-                      }}
-                      onMouseLeave={e => {
-                        e.target.style.background = 'linear-gradient(45deg, #1976d2, #0d47a1)';
-                      }}
-                    >
-                      Send Message
-                      <span className="position-absolute top-0 end-0 bg-white bg-opacity-25 w-100 h-100" 
-                        style={{ transform: 'translateX(100%)', transition: 'transform 0.3s' }}
-                        onMouseEnter={e => e.currentTarget.style.transform = 'translateX(0)'}
-                        onMouseLeave={e => e.currentTarget.style.transform = 'translateX(100%)'}>
-                      </span>
-                    </Button>
-                  </Form>
-                </Card.Body>
-              </Card>
+              <ContactForm />
             </Col>
           </Row>
         </Container>
